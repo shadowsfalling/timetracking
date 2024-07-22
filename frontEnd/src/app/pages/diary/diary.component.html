@@ -1,1 +1,17 @@
-<p>diary works!</p>
+<div class="word-suggestions">
+  <input type="text" [(ngModel)]="word" (input)="onInputChange($event)" (keydown.enter)="onEnter()">
+  <ul *ngIf="showSuggestions">
+    <li *ngFor="let suggestion of suggestions" (click)="onSelectSuggestion(suggestion)">
+      {{ suggestion }}
+    </li>
+  </ul>
+</div>
+
+<div class="today-activities">
+  <h3>Today's Activities</h3>
+  <ul>
+    <li *ngFor="let activity of activities">
+      {{ activity.name }} ({{ activity.created_at | date: 'shortTime' }})
+    </li>
+  </ul>
+</div>
