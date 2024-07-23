@@ -1,0 +1,29 @@
+<div class="timer">
+  <a [href]="'/project/' + project.id">
+    <h3>{{ project.name }}</h3>
+  </a>
+  <div class="timer-display">
+    <div class="circle">
+      <svg viewBox="0 0 36 36">
+        <path class="circle-bg" d="M18 2.0845
+             a 15.9155 15.9155 0 0 1 0 31.831
+             a 15.9155 15.9155 0 0 1 0 -31.831" />
+        <path class="circle-fg"
+          [attr.stroke-dasharray]="(100 * (timerType === 'countdown' ? remainingTime : elapsedTime) / project.default_duration) + ', 100'"
+          d="M18 2.0845
+             a 15.9155 15.9155 0 0 1 0 31.831
+             a 15.9155 15.9155 0 0 1 0 -31.831" />
+      </svg>
+    </div>
+    <div class="countdown">
+      {{ (timerType === 'countdown' ? remainingTime : elapsedTime) | timeFormat }}
+    </div>
+  </div>
+
+  <button (click)="toggleTimer()">
+    {{ isRunning ? 'Stop' : 'Start' }}
+  </button>
+  <button (click)="switchTimerType()">
+    Switch to {{ timerType === 'countdown' ? 'Stopwatch' : 'Countdown' }}
+  </button>
+</div>

@@ -1,1 +1,13 @@
-<p>track-time works!</p>
+<div class="time-tracking">
+    <h2>Time Tracking</h2>
+  
+    <div *ngIf="projects.length === 0">
+      <p>Loading projects...</p>
+    </div>
+  
+    <div *ngIf="projects.length > 0">
+      <div *ngFor="let project of projects">
+        <app-timer [project]="project"></app-timer>
+      </div>
+    </div>
+  </div>

@@ -17,9 +17,9 @@ export class DiaryComponent {
   word: string = '';
   showSuggestions: boolean = false;
 
-  private suggestApiUrl = 'http:/localhost:8000/api/categories/suggest'; // Ändere dies zu deiner API-URL
-  private createApiUrl = 'http:/localhost:8000/api/activities/create-or-suggest'; // Ändere dies zu deiner API-URL
-  private todayActivitiesApiUrl = 'http:/localhost:8000/api/activities/today'; // Ändere dies zu deiner API-URL
+  private suggestApiUrl = 'http://192.168.178.57:8000/api/categories/suggest'; // Ändere dies zu deiner API-URL
+  private createApiUrl = 'http://192.168.178.57:8000/api/activities/create-or-suggest'; // Ändere dies zu deiner API-URL
+  private todayActivitiesApiUrl = 'http://192.168.178.57:8000/api/activities/today'; // Ändere dies zu deiner API-URL
 
   constructor(private http: HttpClient) {}
 

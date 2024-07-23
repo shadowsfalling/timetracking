@@ -1,1 +1,16 @@
-<p>projects works!</p>
+<div class="projects">
+    <h2>Projects</h2>
+  
+    <form (submit)="createProject()">
+      <input [(ngModel)]="newProject.name" name="name" placeholder="Project Name" required>
+      <input [(ngModel)]="newProject.color" name="color" placeholder="Color" required>
+      <button type="submit">Create Project</button>
+    </form>
+  
+    <ul>
+      <li *ngFor="let project of projects">
+        {{ project.name }} - {{ project.color }}
+        <button (click)="deleteProject(project.id)">Delete</button>
+      </li>
+    </ul>
+  </div>

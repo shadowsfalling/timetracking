@@ -1,0 +1,15 @@
+<div class="sidemenu-container">
+    <button class="burger-button" (click)="toggleSidemenu()">
+      ☰
+    </button>
+    <nav class="sidemenu" [class.open]="isOpen">
+      <ul>
+        <li><a routerLink="/" (click)="toggleSidemenu()">Home</a></li>
+        <li><a routerLink="/diary" (click)="toggleSidemenu()">Diary</a></li>
+        <li><a routerLink="/activities" (click)="toggleSidemenu()">Activities</a></li>
+        <li><a routerLink="/track-time" (click)="toggleSidemenu()">Time Tracker</a></li>
+        <li><a routerLink="/projects" (click)="toggleSidemenu()">Projects</a></li>
+        <li><a routerLink="/timeslots" (click)="toggleSidemenu()">Timeslots</a></li>
+      </ul>
+    </nav>
+  </div>

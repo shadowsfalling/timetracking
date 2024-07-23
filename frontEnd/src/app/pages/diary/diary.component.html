@@ -1,5 +1,5 @@
 <div class="word-suggestions">
-  <input type="text" [(ngModel)]="word" (input)="onInputChange($event)" (keydown.enter)="onEnter()">
+  <input type="text" placeholder="Last activity..." [(ngModel)]="word" (input)="onInputChange($event)" (keydown.enter)="onEnter()">
   <ul *ngIf="showSuggestions">
     <li *ngFor="let suggestion of suggestions" (click)="onSelectSuggestion(suggestion)">
       {{ suggestion }}
