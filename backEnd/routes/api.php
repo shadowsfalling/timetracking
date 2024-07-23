@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TimeslotController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,4 +25,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/activities/create-or-suggest', [ActivityController::class, 'createOrSuggest']);
     Route::get('/activities/today', [ActivityController::class, 'getTodayActivities']);
     Route::get('/activities/grouped-by-date', [ActivityController::class, 'getActivitiesGroupedByDate']);
+
+    Route::apiResource('projects', ProjectController::class);
+    Route::post('timeslots', [TimeslotController::class, 'store']);
+    Route::put('timeslots/{timeslot}', [TimeslotController::class, 'update']);
+    Route::get('timeslots/project/{projectId}/today', [TimeslotController::class, 'getTodayTimeslots']);
+
+    Route::get('timeslots/project/{projectId}/summary', [TimeslotController::class, 'getDailySummary']);
 });
