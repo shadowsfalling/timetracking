@@ -3,13 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule]
+  imports: [CommonModule, FormsModule, RouterModule, MatFormFieldModule, MatInputModule, MatButtonModule]
 })
 export class ProjectsComponent implements OnInit {
   projects: any[] = [];
@@ -37,8 +40,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProject(id: number): void {
-    this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
-      this.projects = this.projects.filter(project => project.id !== id);
-    });
+
+    // todo: add confirm
+
+    // this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
+    //   this.projects = this.projects.filter(project => project.id !== id);
+    // });
   }
 }

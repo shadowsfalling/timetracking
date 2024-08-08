@@ -1,0 +1,15 @@
+<div class="edit-timeslot">
+    <h2>Edit Timeslot</h2>
+    <form (ngSubmit)="updateTimeslot()">
+      <select [(ngModel)]="timeslot.project_id" name="project_id" required>
+        <option *ngFor="let project of projects$ | async" [value]="project.id">
+          {{ project.name }}
+        </option>
+      </select>
+  
+      <input [(ngModel)]="timeslot.name" name="name" placeholder="Timeslot Name" required>
+      <input [(ngModel)]="timeslot.start" name="start" type="datetime-local" placeholder="Start Time" required>
+      <input [(ngModel)]="timeslot.end" name="end" type="datetime-local" placeholder="End Time">
+      <button type="submit">Update Timeslot</button>
+    </form>
+  </div>

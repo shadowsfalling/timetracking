@@ -2,4 +2,31 @@
     display: block;
     width: 40px;
     margin: 0 auto;
+    padding-top: 10px;
+}
+
+.progress-circle {
+    transform: rotate(-90deg);
+    /* Dreht den Kreis, sodass er oben beginnt */
+}
+
+circle {
+    transition: stroke-dashoffset 0.35s;
+    transform-origin: 50% 50%;
+}
+
+.breaker {
+    margin: 50px 0;
+    display: block;
+}
+
+.progress-circle {
+    margin: 0 auto;
+    display: block;
+    position: relative;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
 }

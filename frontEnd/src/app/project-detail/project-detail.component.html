@@ -1,10 +1,53 @@
+<a mat-stroked-button class="center" href="/track-time">back</a>
+
 <div class="project-detail">
-    <h3>Project Daily Summary</h3>
-    <div>
-      <p>Total Time Spent Today: {{ totalTime | timeFormat }}</p>
-      <p>Possible End Time: {{ possibleEndTime }}</p>
-    </div>
-
-    <a class="center" href="/track-time">back</a>
-
+  <h3>Project Daily Summary</h3>
+  <div>
+    <p>Total Time Spent Today: {{ totalTime | timeFormat }}</p>
+    <p>Possible End Time: {{ possibleEndTime }}</p>
   </div>
+
+
+  Timeslots:
+  <div class="flex">
+    <b>
+      start
+    </b>
+    <b>
+      end
+    </b>
+    <b>
+      hours
+    </b>
+  </div>
+  <div class="flex" *ngFor="let timeslot of dayTimeSlots$ | async">
+
+    <span>{{ timeslot.start | date:'shortTime' }}</span>
+    <span>{{ timeslot.end | date:'shortTime' }}</span>
+    <span *ngIf="timeslot.end">{{ getTimeSpan(timeslot) | timeFormat }}h</span>
+  </div>
+
+
+
+  <hr class="breaker">
+
+  <h3>Project Monthly Summary</h3>
+
+  <div *ngIf="monthSummary$ | async as monthSummary">
+    <p>Total Time: {{ monthSummary.totalTime | timeFormat }}</p>
+    <p>Monthly Default Duration: {{ monthSummary.monthlyDefaultDuration | timeFormat }}</p>
+    <p>Remaining Time: {{ monthSummary.remainingTime | timeFormat }}</p>
+  </div>
+
+  <svg width="120" height="120" viewBox="0 0 100 100" class="progress-circle">
+    <circle cx="50" cy="50" r="45" fill="transparent" stroke="#eaeaea" stroke-width="10" />
+    <circle cx="50" cy="50" r="45" fill="transparent" stroke="#45ccce" stroke-width="10"
+      [attr.stroke-dasharray]="circumference" [attr.stroke-dashoffset]="strokeDashoffset" stroke-linecap="round" />
+  </svg>
+
+  <hr class="breaker">
+
+  <h3>Project Monthly Daily Basis</h3>
+
+  <canvas id="canvas"></canvas>
+</div>

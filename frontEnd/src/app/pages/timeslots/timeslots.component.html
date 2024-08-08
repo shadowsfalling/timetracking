@@ -1,17 +1,27 @@
 <div class="timeslots">
-    <h2>Timeslots</h2>
-  
-    <form (submit)="createTimeslot()">
-      <input [(ngModel)]="newTimeslot.name" name="name" placeholder="Timeslot Name" required>
-      <input [(ngModel)]="newTimeslot.start" name="start" type="datetime-local" placeholder="Start Time" required>
-      <input [(ngModel)]="newTimeslot.end" name="end" type="datetime-local" placeholder="End Time">
-      <button type="submit">Create Timeslot</button>
-    </form>
-  
-    <ul>
-      <li *ngFor="let timeslot of timeslots">
-        {{ timeslot.name }} - {{ timeslot.start }} to {{ timeslot.end }}
-        <button (click)="deleteTimeslot(timeslot.id)">Delete</button>
-      </li>
-    </ul>
-  </div>
+  <h2>Timeslots</h2>
+
+  <form (submit)="createTimeslot()">
+
+    <select [(ngModel)]="newTimeslot.project_id"  name="project_id">
+      <option *ngFor="let project of projects$ | async" [value]="project.id">
+        {{ project.name }}
+      </option>
+    </select>
+
+    <input [(ngModel)]="newTimeslot.name" name="name" placeholder="Timeslot Name" required>
+    <input [(ngModel)]="newTimeslot.start" name="start" type="datetime-local" placeholder="Start Time" required>
+    <input [(ngModel)]="newTimeslot.end" name="end" type="datetime-local" placeholder="End Time">
+    <button type="submit">Create Timeslot</button>
+  </form>
+
+  <ul>
+    <li *ngFor="let timeslot of timeslots">
+      {{ timeslot.name }} - {{ timeslot.start }} to {{ timeslot.end }}
+      <button [routerLink]="['/timeslots/edit', timeslot.id]">Edit</button>
+      <button (click)="deleteTimeslot(timeslot.id)">Delete</button>
+    </li>
+  </ul>
+</div>
+
+{{ newTimeslot | json }}

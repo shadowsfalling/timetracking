@@ -1,3 +1,22 @@
+<div class="flex">
+  <button mat-stroked-button (click)="dayBefore()">
+    Day before
+  </button>
+
+  <button mat-stroked-button (click)="today()">
+    Today
+  </button>
+
+  <button mat-stroked-button (click)="dayAfter()">
+    Day after
+  </button>
+</div>
+
+<div class="date">
+  {{ date | date }}
+</div>
+
+
 <div class="word-suggestions">
   <input type="text" placeholder="Last activity..." [(ngModel)]="word" (input)="onInputChange($event)" (keydown.enter)="onEnter()">
   <ul *ngIf="showSuggestions">
@@ -12,6 +31,9 @@
   <ul>
     <li *ngFor="let activity of activities">
       {{ activity.name }} ({{ activity.created_at | date: 'shortTime' }})
+    </li>
+    <li *ngIf="activities.length === 0">
+      No activities yet
     </li>
   </ul>
 </div>

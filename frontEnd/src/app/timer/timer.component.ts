@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { interval, Subscription } from 'rxjs';
-import { TimeFormatPipe } from '../time-format.pipe'; // Importiere die neue Pipe
+import { TimeFormatPipe } from '../time-format.pipe';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TimeFormatPipe] // Füge die Pipe zu den Imports hinzu
+  imports: [CommonModule, FormsModule, TimeFormatPipe]
 })
 export class TimerComponent implements OnInit, OnDestroy {
   @Input() project: any;
@@ -32,7 +32,9 @@ export class TimerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.stopTimer();
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
   }
 
   toggleTimer(): void {
@@ -52,7 +54,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
     this.http.post(this.apiUrl, timeslot).subscribe((response: any) => {
       this.currentTimeslotId = response.id;
-      this.startTime = Date.now(); // Setze die Startzeit nach dem Erstellen des Timeslots
+      this.startTime = Date.now();
       this.startTimerSubscription();
     });
   }
@@ -140,6 +142,8 @@ export class TimerComponent implements OnInit, OnDestroy {
       });
 
       this.elapsedTime = totalElapsedTime;
+
+      this.updateTimer();
     });
   }
 }

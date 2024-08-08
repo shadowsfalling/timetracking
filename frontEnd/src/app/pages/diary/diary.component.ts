@@ -1,30 +1,38 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, debounceTime, distinctUntilChanged, switchMap, of } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
+import moment from 'moment';
 
 @Component({
   selector: 'app-diary',
   standalone: true,
-  imports: [FormsModule, CommonModule, HttpClientModule],
+  imports: [FormsModule, CommonModule, HttpClientModule, MatButtonModule],
   templateUrl: './diary.component.html',
-  styleUrl: './diary.component.scss'
+  styleUrls: ['./diary.component.scss']
 })
-export class DiaryComponent {
+export class DiaryComponent implements OnInit {
   suggestions: string[] = [];
-  activities: any[] = []; // Für die heutigen Aktivitäten
+  activities: any[] = [];
   word: string = '';
   showSuggestions: boolean = false;
+  date: string = '';
 
-  private suggestApiUrl = 'http://192.168.178.57:8000/api/categories/suggest'; // Ändere dies zu deiner API-URL
-  private createApiUrl = 'http://192.168.178.57:8000/api/activities/create-or-suggest'; // Ändere dies zu deiner API-URL
-  private todayActivitiesApiUrl = 'http://192.168.178.57:8000/api/activities/today'; // Ändere dies zu deiner API-URL
+  private suggestApiUrl = 'http://192.168.178.57:8000/api/categories/suggest';
+  private createApiUrl = 'http://192.168.178.57:8000/api/activities/create-or-suggest';
+  private activitiesApiUrl = 'http://192.168.178.57:8000/api/activities';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadTodayActivities();
+
+    this.route.queryParamMap.subscribe(params => {
+      this.date = params.get('date') || moment().format('YYYY-MM-DD'); 
+      this.loadActivitiesForDate(this.date);
+    });
   }
 
   onInputChange(event: any): void {
@@ -69,13 +77,36 @@ export class DiaryComponent {
   createActivity(word: string): void {
     this.http.post<{ message: string, activity: any, category: any }>(this.createApiUrl, { word: word }).subscribe(response => {
       console.log('Activity created:', response.activity);
-      this.activities.push(response.activity); // Neue Aktivität zur Liste hinzufügen
+      this.activities.push(response.activity); 
     });
   }
 
-  loadTodayActivities(): void {
-    this.http.get<any[]>(this.todayActivitiesApiUrl).subscribe(activities => {
-      this.activities = activities;
-    });
+  loadActivitiesForDate(date: string): void {
+
+    if (date) {
+
+      this.http.get<any[]>(`${this.activitiesApiUrl}?date=${date}`).subscribe(activities => {
+        this.activities = activities;
+      });
+    } else {
+      this.http.get<any[]>(`${this.activitiesApiUrl}/today`).subscribe(activities => {
+        this.activities = activities;
+      });
+    }
+  }
+
+  dayBefore(): void {
+    const previousDay = moment(this.date).subtract(1, 'days').format('YYYY-MM-DD');
+    this.router.navigate([], { queryParams: { date: previousDay } });
+  }
+
+  today(): void {
+    const today = moment().format('YYYY-MM-DD');
+    this.router.navigate([], { queryParams: { date: today } });
+  }
+
+  dayAfter(): void {
+    const nextDay = moment(this.date).add(1, 'days').format('YYYY-MM-DD');
+    this.router.navigate([], { queryParams: { date: nextDay } });
   }
 }
