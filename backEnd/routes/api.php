@@ -35,6 +35,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('timeslots/project/{projectId}/today', [TimeslotController::class, 'getTodayTimeslots']);
     
 
+
+
+    Route::post('timeslots/full', [TimeslotController::class, 'storeFull']);
+    Route::put('timeslots/{timeslot}/full', [TimeslotController::class, 'updateFull']);
+
+
+
+
     Route::get('timeslots/project/{projectId}/summary/today', [TimeslotController::class, 'getDailySummary']);
     Route::get('timeslots/project/{projectId}/summary', [TimeslotController::class, 'getDaySummary']);
     Route::get('timeslots/project/{projectId}/summary/month', [TimeslotController::class, 'getMonthSummary']);

@@ -13,7 +13,7 @@ class Activity extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category_id', 'user_id'];
+    protected $fillable = ['name', 'category_id', 'user_id', 'timeslot_id'];
 
     /**
      * Get the user that owns the category.

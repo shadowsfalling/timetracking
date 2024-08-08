@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Activity;
+use App\Models\TimeSlot;
 use Carbon\Carbon;
 
 class ActivityController extends Controller
@@ -24,10 +25,17 @@ class ActivityController extends Controller
             $category = Category::create(['name' => $word, 'color' => $this->generateRandomColor(), 'user_id' => $user_id]);
         }
 
+        $openTimeslot = TimeSlot::where('user_id', $user_id)
+            ->whereNull('end')
+            ->first();
+
+        $timeslot_id = $openTimeslot ? $openTimeslot->id : null;
+
         $activity = Activity::create([
             'name' => $word,
             'user_id' => $user_id,
             'category_id' => $category->id,
+            'timeslot_id' => $timeslot_id,
         ]);
 
         return response()->json([
@@ -73,7 +81,7 @@ class ActivityController extends Controller
 
         return response()->json($activities);
     }
-    
+
 
     /**
      * Get all activities grouped by date.

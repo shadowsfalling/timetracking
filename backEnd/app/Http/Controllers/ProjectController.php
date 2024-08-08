@@ -9,7 +9,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        return Project::all();
+        return Project::orderBy('name')->get();
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'color' => 'required|string|max:7',
             'user_id' => 'nullable|exists:users,id',
-            'default_duration' => 'required|integer'
+            'default_duration' => 'required|integer',
         ]);
 
         $project->update($request->all());
