@@ -16,7 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ProjectsComponent implements OnInit {
   projects: any[] = [];
-  newProject: any = { name: '', color: '' };
+  newProject: any = { name: '', color: '', default_duration: 0 };
 
   private apiUrl = 'http://192.168.178.57:8000/api/projects';
 
@@ -33,6 +33,9 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(): void {
+
+    this.newProject.default_duration = this.newProject.default_duration * 60 * 60;
+
     this.http.post<any>(this.apiUrl, this.newProject).subscribe(project => {
       this.projects.push(project);
       this.newProject = { name: '', color: '' };

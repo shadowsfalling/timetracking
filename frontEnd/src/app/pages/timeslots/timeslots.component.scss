@@ -1,22 +1,36 @@
 /* timeslots.component.css */
 .timeslots {
-    margin: 2rem;
-  }
-  
-  .timeslots form {
-    margin-bottom: 1rem;
-  }
-  
-  .timeslots ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .timeslots li {
-    padding: 0.5rem;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .timeslots button {
-    margin-left: 1rem;
-  }
+  margin: 1rem;
+}
+
+.timeslots form {
+  margin-bottom: 1rem;
+}
+
+.timeslots ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.timeslots li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.timeslots button {
+  margin-left: 1rem;
+}
+
+.half {
+  width: 45%;
+  margin-right: 5%;
+}
+
+.full-width {
+  width: 95%;
+}
+
+.breaker {
+  margin: 50px 0;
+  display: block;
+}

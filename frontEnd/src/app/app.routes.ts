@@ -1,6 +1,5 @@
 import { provideRouter, RouterModule, Routes } from '@angular/router';
 import { DiaryComponent } from './pages/diary/diary.component';
-import { StartComponent } from './pages/start/start.component';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './pages/login/login.component';
 import { TrackTimeComponent } from './pages/track-time/track-time.component';
@@ -10,7 +9,7 @@ import { ProjectDetailComponent } from './project-detail/project-detail.componen
 import { EditTimeslotComponent } from './pages/edit-timeslot/edit-timeslot.component';
 
 export const routes: Routes = [
-  { path: '', component: StartComponent,  canActivate: [AuthGuard] },
+  { path: '', component: TrackTimeComponent,  canActivate: [AuthGuard] },
   { path: 'diary', component: DiaryComponent,  canActivate: [AuthGuard] },
   { path: 'track-time', component: TrackTimeComponent,  canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },

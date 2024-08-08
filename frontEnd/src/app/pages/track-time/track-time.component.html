@@ -8,6 +8,7 @@
     <div *ngIf="projects.length > 0">
       <div *ngFor="let project of projects">
         <app-timer [project]="project"></app-timer>
+        <hr class="breaker" />
       </div>
     </div>
   </div>

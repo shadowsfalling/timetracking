@@ -1,27 +1,67 @@
 <div class="timeslots">
-  <h2>Timeslots</h2>
+  <h2>Create timeslot</h2>
 
   <form (submit)="createTimeslot()">
 
-    <select [(ngModel)]="newTimeslot.project_id"  name="project_id">
-      <option *ngFor="let project of projects$ | async" [value]="project.id">
-        {{ project.name }}
-      </option>
-    </select>
+    <mat-form-field>
+      <mat-label>Projects</mat-label>
+      <mat-select [(ngModel)]="newTimeslot.project_id" name="project_id">
+        <mat-option *ngFor="let project of projects$ | async" [value]="project.id">{{ project.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <input [(ngModel)]="newTimeslot.name" name="name" placeholder="Timeslot Name" required>
-    <input [(ngModel)]="newTimeslot.start" name="start" type="datetime-local" placeholder="Start Time" required>
-    <input [(ngModel)]="newTimeslot.end" name="end" type="datetime-local" placeholder="End Time">
-    <button type="submit">Create Timeslot</button>
+    <mat-form-field class="full-width">
+      <mat-label>Projectname</mat-label>
+      <input [(ngModel)]="newTimeslot.name" name="name" matInput placeholder="Your cool project" value="">
+    </mat-form-field>
+
+    <div class="flex">
+      <mat-form-field class="half">
+        <mat-label>Choose a startdate</mat-label>
+        <input (dateChange)="dateChanged($event, 'start')" matInput [matDatepicker]="startPicker"
+          [formControl]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="half">
+        <mat-label>Choose a starttime</mat-label>
+        <input matInput type="time" (change)="timeChanged($event, 'start')" [formControl]="startTime">
+      </mat-form-field>
+    </div>
+
+    <div class="flex">
+      <mat-form-field class="half">
+        <mat-label>Choose an enddate</mat-label>
+        <input (dateChange)="dateChanged($event, 'end')" matInput [matDatepicker]="endPicker" [formControl]="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="half">
+        <mat-label>Choose an endtime</mat-label>
+        <input matInput type="time" (change)="timeChanged($event, 'end')" [formControl]="endTime">
+      </mat-form-field>
+    </div>
+
+    <button mat-stroked-button type="submit">Create Timeslot</button>
   </form>
+
+  todo: refresh list after save
+
+  <hr class="breaker" />
+  <h2>Timeslots</h2>
 
   <ul>
     <li *ngFor="let timeslot of timeslots">
+      <br />
       {{ timeslot.name }} - {{ timeslot.start }} to {{ timeslot.end }}
-      <button [routerLink]="['/timeslots/edit', timeslot.id]">Edit</button>
-      <button (click)="deleteTimeslot(timeslot.id)">Delete</button>
+      <br />
+      <br />
+      <button mat-stroked-button [routerLink]="['/timeslots/edit', timeslot.id]">Edit</button>
+      <button mat-stroked-button color="warn" (click)="deleteTimeslot(timeslot.id)">Delete</button>
     </li>
   </ul>
 </div>
 
-{{ newTimeslot | json }}
+todo: confirm before delete

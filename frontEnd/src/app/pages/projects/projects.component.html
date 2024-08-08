@@ -1,5 +1,5 @@
 <div class="projects">
-  <h2>Projects</h2>
+  <h2>Add Project</h2>
 
   <form (submit)="createProject()">
 
@@ -9,17 +9,27 @@
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <mat-label>Project Name</mat-label>
+      <mat-label>Project color</mat-label>
       <input matInput [(ngModel)]="newProject.color" name="color" placeholder="Color" required>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Project default duration</mat-label>
+      <input matInput [(ngModel)]="newProject.default_duration" name="default_duration" placeholder="3600 Sekunden"
+        required>
     </mat-form-field>
 
     <button mat-stroked-button type="submit">Create Project</button>
   </form>
 
+  <hr class="breaker" />
+
+  <h2>Projects</h2>
+
   <ul>
     <li *ngFor="let project of projects">
-      {{ project.name }} - {{ project.color }}
-      <button color="warn" mat-stroked-button  (click)="deleteProject(project.id)">Delete</button>
+      <a [routerLink]="['/project/' + project.id]"> {{ project.name }} - {{ project.color }}</a>
+      <button color="warn" mat-stroked-button (click)="deleteProject(project.id)">Delete</button>
     </li>
   </ul>
 </div>
