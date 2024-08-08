@@ -24,12 +24,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/categories/suggest', [CategoryController::class, 'suggest']);
     Route::post('/activities/create-or-suggest', [ActivityController::class, 'createOrSuggest']);
     Route::get('/activities/today', [ActivityController::class, 'getTodayActivities']);
+    Route::get('/activities', [ActivityController::class, 'getDateActivities']);
     Route::get('/activities/grouped-by-date', [ActivityController::class, 'getActivitiesGroupedByDate']);
 
     Route::apiResource('projects', ProjectController::class);
+    Route::get('timeslots/{timeslot}', [TimeslotController::class, 'show']);
+    Route::get('timeslots', [TimeslotController::class, 'index']);
     Route::post('timeslots', [TimeslotController::class, 'store']);
     Route::put('timeslots/{timeslot}', [TimeslotController::class, 'update']);
     Route::get('timeslots/project/{projectId}/today', [TimeslotController::class, 'getTodayTimeslots']);
+    
 
-    Route::get('timeslots/project/{projectId}/summary', [TimeslotController::class, 'getDailySummary']);
+    Route::get('timeslots/project/{projectId}/summary/today', [TimeslotController::class, 'getDailySummary']);
+    Route::get('timeslots/project/{projectId}/summary', [TimeslotController::class, 'getDaySummary']);
+    Route::get('timeslots/project/{projectId}/summary/month', [TimeslotController::class, 'getMonthSummary']);
 });

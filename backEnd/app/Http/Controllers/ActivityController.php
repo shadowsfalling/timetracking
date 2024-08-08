@@ -57,6 +57,24 @@ class ActivityController extends Controller
         return response()->json($activities);
     }
 
+
+    /**
+     * Get all activities for the given date.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDateActivities(Request $request)
+    {
+        $request->validate([
+            'date' => 'required|date',
+        ]);
+
+        $activities = Activity::whereDate('created_at', $request->date)->get();
+
+        return response()->json($activities);
+    }
+    
+
     /**
      * Get all activities grouped by date.
      *
