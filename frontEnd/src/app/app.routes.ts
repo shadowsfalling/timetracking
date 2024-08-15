@@ -7,6 +7,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { TimeslotsComponent } from './pages/timeslots/timeslots.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { EditTimeslotComponent } from './pages/edit-timeslot/edit-timeslot.component';
+import { EditActivityComponent } from './pages/edit-activity/edit-activity.component';
 
 export const routes: Routes = [
   { path: '', component: TrackTimeComponent,  canActivate: [AuthGuard] },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'timeslots', component: TimeslotsComponent,  canActivate: [AuthGuard]  },
   { path: 'project/:id', component: ProjectDetailComponent },
   { path: 'timeslots/edit/:id', component: EditTimeslotComponent },
+  { path: 'activities/edit/:id', component: EditActivityComponent },
 ];
 
 export const routingProviders = [

@@ -6,12 +6,12 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { project } from '../../dto/project';
 import { Observable } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import moment from 'moment';
 import { MatButtonModule } from '@angular/material/button';
+import { Project } from '../../dto/project';
 
 @Component({
   selector: 'app-timeslots',
@@ -33,7 +33,7 @@ export class TimeslotsComponent implements OnInit {
   timeslots: any[] = [];
   newTimeslot: any = { name: '', start: '', end: '', project_id: '' };
 
-  projects$: Observable<project[]> | undefined;
+  projects$: Observable<Project[]> | undefined;
 
   private apiUrl = 'http://192.168.178.57:8000/api';
 
@@ -54,7 +54,7 @@ export class TimeslotsComponent implements OnInit {
   }
 
   loadProjects() {
-    this.projects$ = this.http.get<project[]>(`${this.apiUrl}/projects`);
+    this.projects$ = this.http.get<Project[]>(`${this.apiUrl}/projects`);
   }
 
   loadTimeslots(): void {

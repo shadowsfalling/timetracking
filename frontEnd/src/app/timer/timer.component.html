@@ -1,5 +1,5 @@
 <div class="timer">
-  <a [href]="'/project/' + project.id">
+  <a [href]="'/#/project/' + project.id">
     <h3>{{ project.name }}</h3>
   </a>
   <div class="timer-display">
@@ -20,10 +20,11 @@
     </div>
   </div>
 
-  <button (click)="toggleTimer()">
+  <button mat-flat-button color="primary" (click)="toggleTimer()">
     {{ isRunning ? 'Stop' : 'Start' }}
   </button>
-  <button (click)="switchTimerType()">
+  <br />
+  <button mat-flat-button (click)="switchTimerType()">
     Switch to {{ timerType === 'countdown' ? 'Stopwatch' : 'Countdown' }}
   </button>
 </div>

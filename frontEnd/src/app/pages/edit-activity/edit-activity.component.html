@@ -1,0 +1,24 @@
+<div class="edit-activity">
+    <h2>Aktivität bearbeiten</h2>
+  
+    <form [formGroup]="activityForm" (ngSubmit)="updateActivity()">
+      <mat-form-field appearance="fill">
+        <mat-label>Name der Aktivität</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="activityForm.get('name')?.invalid">Name ist erforderlich und darf nicht länger als 255 Zeichen sein.</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Kategorie</mat-label>
+        <mat-select formControlName="category_id" required>
+          <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="activityForm.get('category_id')?.invalid">Kategorie ist erforderlich.</mat-error>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="activityForm.invalid">Aktualisieren</button>
+      <button mat-button color="warn" routerLink="/activities">Abbrechen</button>
+    </form>
+  </div>

@@ -1,6 +1,6 @@
-export class project {
-    id: number = null!;
-    name: string = null!;
-    color: string = null!;
-    default_duration: number = null!;
+export interface Project {
+    id: number;
+    name: string;
+    color: string;
+    default_duration: number;
 }

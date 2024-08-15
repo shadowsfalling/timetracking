@@ -5,11 +5,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TimeFormatPipe } from '../time-format.pipe';
 import moment from 'moment';
-import { monthTime } from '../dto/monthTime';
 import { Observable } from 'rxjs/internal/Observable';
 import Chart from 'chart.js/auto';
-import { timeslot } from '../dto/timeslot';
 import { MatButtonModule } from '@angular/material/button';
+import { MonthTime } from '../dto/monthTime';
+import { Timeslot } from '../dto/timeslot';
 
 @Component({
   selector: 'app-project-detail',
@@ -23,8 +23,8 @@ export class ProjectDetailComponent implements OnInit {
   totalTime: number = 0;
   possibleEndTime: string = "";
 
-  monthSummary$: Observable<monthTime> | undefined;
-  dayTimeSlots$: Observable<timeslot[]> | undefined;
+  monthSummary$: Observable<MonthTime> | undefined;
+  dayTimeSlots$: Observable<Timeslot[]> | undefined;
 
   progress: number = 0;
   max: number = 100;
@@ -50,10 +50,10 @@ export class ProjectDetailComponent implements OnInit {
       this.possibleEndTime = response.possibleEndTime;
     });
 
-    this.dayTimeSlots$ = this.http.get<timeslot[]>(`${this.apiUrl}/project/${this.projectId}/today`);
+    this.dayTimeSlots$ = this.http.get<Timeslot[]>(`${this.apiUrl}/project/${this.projectId}/today`);
 
-    this.monthSummary$ = this.http.get<monthTime>(`${this.apiUrl}/project/${this.projectId}/summary/month`, { params: { 'date': date } });
-    this.monthSummary$.subscribe((summary: monthTime) => {
+    this.monthSummary$ = this.http.get<MonthTime>(`${this.apiUrl}/project/${this.projectId}/summary/month`, { params: { 'date': date } });
+    this.monthSummary$.subscribe((summary: MonthTime) => {
       this.progress = (summary.totalTime / summary.monthlyDefaultDuration) * 100;
 
       // Labels für jeden Tag des Monats
@@ -124,7 +124,7 @@ export class ProjectDetailComponent implements OnInit {
     return this.circumference - (this.progress / 100) * this.circumference;
   }
 
-  getTimeSpan(timeslot: timeslot) {
+  getTimeSpan(timeslot: Timeslot) {
 
     let end = moment(timeslot.end);
     const start = moment(timeslot.start);

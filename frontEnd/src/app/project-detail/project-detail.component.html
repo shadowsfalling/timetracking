@@ -1,4 +1,4 @@
-<a mat-stroked-button class="center" href="/track-time">back</a>
+<a mat-stroked-button class="center" href="/#/track-time">back</a>
 
 <div class="project-detail">
   <h3>Project Daily Summary</h3>
@@ -8,24 +8,38 @@
   </div>
 
 
-  Timeslots:
-  <div class="flex">
-    <b>
-      start
-    </b>
-    <b>
-      end
-    </b>
-    <b>
-      hours
-    </b>
-  </div>
-  <div class="flex" *ngFor="let timeslot of dayTimeSlots$ | async">
+  <br />
+  <br />
 
-    <span>{{ timeslot.start | date:'shortTime' }}</span>
-    <span>{{ timeslot.end | date:'shortTime' }}</span>
-    <span *ngIf="timeslot.end">{{ getTimeSpan(timeslot) | timeFormat }}h</span>
+  <b>Timeslots:</b>
+
+  <div *ngIf="dayTimeSlots$ | async as timeslots">
+    <div *ngIf="timeslots.length > 0; else noTimeslots">
+
+      <br />
+      <div class="flex">
+        <b>
+          start
+        </b>
+        <b>
+          end
+        </b>
+        <b>
+          hours
+        </b>
+      </div>
+
+      <div class="flex" *ngFor="let timeslot of timeslots">
+        <span>{{ timeslot.start | date:'shortTime' }}</span>
+        <span>{{ timeslot.end | date:'shortTime' }}</span>
+        <span *ngIf="timeslot.end">{{ getTimeSpan(timeslot) | timeFormat }}h</span>
+      </div>
+    </div>
   </div>
+
+  <ng-template #noTimeslots>
+    <p>Keine Timeslots für den ausgewählten Tag vorhanden.</p>
+  </ng-template>
 
 
 

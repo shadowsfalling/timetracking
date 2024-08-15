@@ -18,7 +18,8 @@
 
 
 <div class="word-suggestions">
-  <input type="text" placeholder="Last activity..." [(ngModel)]="word" (input)="onInputChange($event)" (keydown.enter)="onEnter()">
+  <input type="text" placeholder="Last activity..." [(ngModel)]="word" (input)="onInputChange($event)"
+    (keydown.enter)="onEnter()">
   <ul *ngIf="showSuggestions">
     <li *ngFor="let suggestion of suggestions" (click)="onSelectSuggestion(suggestion)">
       {{ suggestion }}
@@ -30,6 +31,9 @@
   <h3>Today's Activities</h3>
   <ul>
     <li *ngFor="let activity of activities">
+
+      <a mat-stroked-button href="/#/activities/edit/{{activity.id}}">edit</a>
+
       {{ activity.name }} ({{ activity.created_at | date: 'shortTime' }})
     </li>
     <li *ngIf="activities.length === 0">

@@ -1,5 +1,5 @@
-export class timeslot {
-    id: number = null!;
-    start: Date = null!;
-    end: Date = null!;
+export interface Timeslot {
+    id: number;
+    start: Date;
+    end: Date;
 }

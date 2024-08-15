@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { interval, Subscription } from 'rxjs';
 import { TimeFormatPipe } from '../time-format.pipe';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TimeFormatPipe]
+  imports: [CommonModule, FormsModule, TimeFormatPipe, MatButtonModule]
 })
 export class TimerComponent implements OnInit, OnDestroy {
   @Input() project: any;
@@ -24,7 +25,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   private apiUrl = 'http://192.168.178.57:8000/api/timeslots';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.resetTimer();
@@ -80,7 +81,6 @@ export class TimerComponent implements OnInit, OnDestroy {
     };
 
     this.http.put(`${this.apiUrl}/${this.currentTimeslotId}`, timeslot).subscribe(response => {
-      console.log('Timeslot updated:', response);
       this.calculateElapsedTime();
     });
 
@@ -102,6 +102,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
     if (this.timerType === 'countdown') {
       this.remainingTime = this.project.default_duration - (this.elapsedTime + elapsed);
+
       if (this.remainingTime <= 0) {
         this.stopTimer();
         this.remainingTime = 0;
@@ -137,8 +138,10 @@ export class TimerComponent implements OnInit, OnDestroy {
 
       timeslots.forEach(timeslot => {
         const start = new Date(timeslot.start).getTime();
-        const end = timeslot.end ? new Date(timeslot.end).getTime() : currentTime;
-        totalElapsedTime += (end - start) / 1000;
+        if (timeslot.end) {
+          const end = new Date(timeslot.end).getTime();
+          totalElapsedTime += (end - start) / 1000;
+        }
       });
 
       this.elapsedTime = totalElapsedTime;

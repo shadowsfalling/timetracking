@@ -3,17 +3,17 @@
 
   <form (submit)="createProject()">
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="full-width">
       <mat-label>Project Name</mat-label>
       <input matInput [(ngModel)]="newProject.name" name="name" placeholder="Project Name" required>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="full-width">
       <mat-label>Project color</mat-label>
       <input matInput [(ngModel)]="newProject.color" name="color" placeholder="Color" required>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="full-width">
       <mat-label>Project default duration</mat-label>
       <input matInput [(ngModel)]="newProject.default_duration" name="default_duration" placeholder="3600 Sekunden"
         required>
