@@ -21,6 +21,8 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::get('/categories', [CategoryController::class, 'index']);
+
     Route::post('/categories/suggest', [CategoryController::class, 'suggest']);
     Route::post('/activities/create-or-suggest', [ActivityController::class, 'createOrSuggest']);
     Route::get('/activities/today', [ActivityController::class, 'getTodayActivities']);
@@ -33,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('timeslots', [TimeslotController::class, 'store']);
     Route::put('timeslots/{timeslot}', [TimeslotController::class, 'update']);
     Route::get('timeslots/project/{projectId}/today', [TimeslotController::class, 'getTodayTimeslots']);
-    
+
 
 
 
@@ -41,7 +43,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('timeslots/{timeslot}/full', [TimeslotController::class, 'updateFull']);
 
 
-
+    Route::get('activities/{id}', [ActivityController::class, 'show']);
+    Route::put('activities/{id}', [ActivityController::class, 'update']);
 
     Route::get('timeslots/project/{projectId}/summary/today', [TimeslotController::class, 'getDailySummary']);
     Route::get('timeslots/project/{projectId}/summary', [TimeslotController::class, 'getDaySummary']);

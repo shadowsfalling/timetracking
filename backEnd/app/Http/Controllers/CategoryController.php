@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\Activity;
+
 
 class CategoryController extends Controller
 {
  
+    public function index(Request $request) {
+        $user_id = $request->user()->id;
+
+        $suggestions = Category::where('user_id', '=', $user_id)->get();
+
+        return $suggestions;
+    }
+
     public function suggest(Request $request)
     {
         $request->validate([

@@ -5,11 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Activity;
-use App\Models\TimeSlot;
+use App\Models\Timeslot;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
 {
+
+    public function show($id) {
+        if(!is_numeric($id)) {
+            return abort(400, "id is not a number");
+        }
+
+        return Activity::find($id);
+    }
+
     public function createOrSuggest(Request $request)
     {
         $request->validate([
@@ -25,7 +35,7 @@ class ActivityController extends Controller
             $category = Category::create(['name' => $word, 'color' => $this->generateRandomColor(), 'user_id' => $user_id]);
         }
 
-        $openTimeslot = TimeSlot::where('user_id', $user_id)
+        $openTimeslot = Timeslot::where('user_id', $user_id)
             ->whereNull('end')
             ->first();
 
@@ -96,5 +106,30 @@ class ActivityController extends Controller
             ->get();
 
         return response()->json($activities);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $activity = Activity::findOrFail($id);
+
+        $activity->name = $request->input('name');
+        $activity->category_id = $request->input('category_id');
+        $activity->save();
+
+        return response()->json([
+            'message' => 'Activity updated successfully',
+            'activity' => $activity
+        ]);
     }
 }

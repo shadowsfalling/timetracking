@@ -110,7 +110,7 @@ class TimeslotController extends Controller
 
         $timeslots = Timeslot::where('project_id', $projectId)
             ->where('user_id', $userId)
-            ->where('start', '>=', $startOfToday)
+            ->where('start', '=', $startOfToday)
             ->orderBy('start', 'asc')
             ->get();
 
