@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -20,7 +20,7 @@ export class ProjectsComponent implements OnInit {
 
   private apiUrl = 'http://192.168.178.57:8000/api/projects';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadProjects();
@@ -43,11 +43,10 @@ export class ProjectsComponent implements OnInit {
   }
 
   deleteProject(id: number): void {
-
-    // todo: add confirm
-
-    // this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
-    //   this.projects = this.projects.filter(project => project.id !== id);
-    // });
+    if (window.confirm('Are sure you want to delete this project?')) {
+      this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
+        this.projects = this.projects.filter(project => project.id !== id);
+      });
+    }
   }
 }

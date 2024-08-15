@@ -73,7 +73,7 @@ export class TimeslotsComponent implements OnInit {
     if (this.newTimeslot.project_id && this.newTimeslot.name && this.newTimeslot.start) {
       this.http.post<any>(`${this.apiUrl}/timeslots/full`, this.newTimeslot).subscribe(
         () => {
-          this.router.navigate(['/timeslots']);
+          this.loadTimeslots();
         },
         (error) => {
           console.error('Error creating timeslot:', error);
@@ -85,9 +85,12 @@ export class TimeslotsComponent implements OnInit {
   }
 
   deleteTimeslot(id: number): void {
-    this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
-      this.timeslots = this.timeslots.filter(t => t.id !== id);
-    });
+
+    if (window.confirm('Are sure you want to delete this timeslot?')) {
+      this.http.delete(`${this.apiUrl}/timeslots/${id}`).subscribe(() => {
+        this.timeslots = this.timeslots.filter(t => t.id !== id);
+      });
+    }
   }
 
   dateChanged(event: any, type: string): void {
