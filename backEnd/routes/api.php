@@ -31,13 +31,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('projects', ProjectController::class);
     Route::get('timeslots/{timeslot}', [TimeslotController::class, 'show']);
+    Route::delete('timeslots/{timeslot}', [TimeslotController::class, 'destroy']);
     Route::get('timeslots', [TimeslotController::class, 'index']);
     Route::post('timeslots', [TimeslotController::class, 'store']);
     Route::put('timeslots/{timeslot}', [TimeslotController::class, 'update']);
     Route::get('timeslots/project/{projectId}/today', [TimeslotController::class, 'getTodayTimeslots']);
-
-
-
 
     Route::post('timeslots/full', [TimeslotController::class, 'storeFull']);
     Route::put('timeslots/{timeslot}/full', [TimeslotController::class, 'updateFull']);
